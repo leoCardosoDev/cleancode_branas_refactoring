@@ -1,49 +1,30 @@
 // @ts-nocheck
-// calculate ride
-export function calculateRide(segments) {
-	let fare = 0;
-	for (const segment of segments) {
-		if (segment.distance != null && segment.distance != undefined && typeof segment.distance === "number" && segment.distance > 0) {
-			if (segment.date != null && segment.date != undefined && segment.date instanceof Date && segment.date.toString() !== "Invalid Date") {
+import express from "express";
+import { isOvernight, isSunday, isValidDate, isValidDistance } from "./ride_calculator"
 
-				// overnight
+const app = express();
+app.use(express.json());
 
-				if (segment.date.getHours() >= 22 || segment.date.getHours() <= 6) {
-
-					// not sunday
-					if (segment.date.getDay() !== 0) {
-
-						fare += segment.distance * 3.90;
-						// sunday
-					} else {
-						fare += segment.distance * 5;
-
-					}
-				} else {
-					// sunday
-					if (segment.date.getDay() === 0) {
-
-						fare += segment.distance * 2.9;
-
-					} else {
-						fare += segment.distance * 2.10;
-
-					}
-				}
-			} else {
-				// console.log(d);
-				return -2;
-			}
-		} else {
-			// console.log(distance);
-
-			return -1;
-		}
-
+app.post("/calculate_ride", function (req, res) {
+  let price = 0;
+	for (const segment of req.body.segments) {
+    segment.date = new Date(segment.date);
+		if (!isValidDistance(segment)) return res.json({price:-1}); 
+		if (!isValidDate(segment)) return res.json({price:-2}); 
+    if (isOvernight(segment) && !isSunday(segment)) {
+      price += segment.distance * 3.90;
+    }
+    if (isOvernight(segment) && isSunday(segment)) {
+      price += segment.distance * 5;
+    }
+    if (!isOvernight(segment) && isSunday(segment)) {
+      price += segment.distance * 2.9;
+    }
+    if (!isOvernight(segment) && !isSunday(segment)) {
+      price += segment.distance * 2.10;
+    }
 	}
-	if (fare < 10) {
-		return 10;
-	} else {
-		return fare;
-	}
-}
+  price = (price < 10) ? 10 : price;
+  return res.json({price});
+});
+app.listen(3000);
