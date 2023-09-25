@@ -12,10 +12,10 @@ export default class Segment {
   }
   
   isValidDistance() {
-    return this.distance != null && this.distance != undefined && typeof this.distance === "number" && this.distance > 0;
+    return this.distance && typeof this.distance === "number" && this.distance > 0;
   }
   
   isValidDate() {
-    return this.date != null && this.date != undefined && this.date instanceof Date && this.date.toString() !== "Invalid Date";
+    return this.date && this.date instanceof Date && this.date.toString() !== "Invalid Date";
   }
 }
