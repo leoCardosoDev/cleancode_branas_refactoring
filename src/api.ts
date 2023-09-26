@@ -3,7 +3,7 @@ import express from "express";
 import Ride from "./ride";
 import pgp from "pg-promise";
 import crypto from "crypto"
-import { validateCpf } from "../notes/cpf_validator";
+import { validateCpf } from "../notes/before/cpf_validator";
 
 const app = express();
 app.use(express.json());
