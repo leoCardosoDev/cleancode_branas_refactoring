@@ -38,6 +38,18 @@ test("Deve cadastrar um passageiro", async () => {
   expect(output.passengerId).toBeDefined();
 });
 
+test("Não deve cadastrar um passageiro com cpf invalido", async () => {
+  const input = {
+    name: "John Doe",
+    email: "john.doe@test.com",
+    document: "834.326.160-76"
+  };
+  const response = await axios.post("http://localhost:3000/passengers", input);
+  expect(response.status).toBe(422)
+  const output = response.data;
+  expect(output).toBe("Invalid CPF");
+});
+
 test("Deve obter um passageiro", async () => {
   const input = {
     name: "John Doe",
@@ -51,4 +63,33 @@ test("Deve obter um passageiro", async () => {
   expect(output.name).toBe("John Doe");
   expect(output.email).toBe("john.doe@test.com");
   expect(output.document).toBe("834.326.160-74");
+});
+
+test("Deve cadastrar um motorista", async () => {
+  const input = {
+    name: "John Doe",
+    email: "john.doe@test.com",
+    document: "834.326.160-74",
+    carPlate: "AAA999"
+  };
+  const response = await axios.post("http://localhost:3000/drivers", input);
+  const output = response.data;
+  expect(output.driverId).toBeDefined();
+});
+
+test("Deve obter um motorista", async () => {
+  const input = {
+    name: "John Doe",
+    email: "john.doe@test.com",
+    document: "834.326.160-74",
+    carPlate: "AAA999"
+  };
+  const responseCreateDriver = await axios.post("http://localhost:3000/drivers", input);
+  const outputCreateDriver = responseCreateDriver.data;
+  const response = await axios.get(`http://localhost:3000/drivers/${outputCreateDriver.driverId}`);
+  const output = response.data;
+  expect(output.name).toBe("John Doe");
+  expect(output.email).toBe("john.doe@test.com");
+  expect(output.document).toBe("834.326.160-74");
+  expect(output.car_plate).toBe("AAA999");
 });
