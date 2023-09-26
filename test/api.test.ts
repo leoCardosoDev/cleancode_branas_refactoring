@@ -91,5 +91,18 @@ test("Deve obter um motorista", async () => {
   expect(output.name).toBe("John Doe");
   expect(output.email).toBe("john.doe@test.com");
   expect(output.document).toBe("834.326.160-74");
-  expect(output.car_plate).toBe("AAA999");
+  expect(output.carPlate).toBe("AAA999");
+});
+
+test("Não deve cadastrar um motorista com cpf invalido", async () => {
+  const input = {
+    name: "John Doe",
+    email: "john.doe@test.com",
+    document: "834.326.160-76",
+    carPlate: "AAA999"
+  };
+  const response = await axios.post("http://localhost:3000/drivers", input);
+  expect(response.status).toBe(422)
+  const output = response.data;
+  expect(output).toBe("Invalid CPF");
 });

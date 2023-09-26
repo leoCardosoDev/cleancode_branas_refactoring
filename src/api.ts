@@ -38,7 +38,12 @@ app.get("/passengers/:passengerId", async function(req, res){
   const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
   const [passengerData] = await connection.query("select * from cccat12.passenger where passenger_id = $1",[req.params.passengerId]);
   await connection.$pool.end();
-  res.json(passengerData);
+  res.json({
+    passengerId: passengerData.passenger_id,
+    name: passengerData.name,
+    email: passengerData.email,
+    document: passengerData.document
+  });
 });
 
 app.post("/drivers", async function(req, res) {
@@ -58,7 +63,13 @@ app.get("/drivers/:driverId", async function(req, res){
   const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
   const [driverData] = await connection.query("select * from cccat12.driver where driver_id = $1",[req.params.driverId]);
   await connection.$pool.end();
-  res.json(driverData);
+  res.json({
+    driveId: driverData.driver_id,
+    name: driverData.name,
+    email: driverData.email,
+    document: driverData.document,
+    carPlate: driverData.car_plate
+  });
 });
 
 app.listen(3000);
