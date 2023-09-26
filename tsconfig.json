@@ -109,5 +109,5 @@
   "include": [
     "src",
     "test"
-  ]
+, "notes/cpf_validator.ts", "notes/cpf_validator.test.ts"  ]
 }

@@ -4,3 +4,14 @@
 4 - npx ts-jest config:init
 5 - npx jest
 6 - npx nodemon src/main.ts
+
+83432616074
+74587887803
+87175659520
+
+83432616076
+99999999999
+834326160
+""
+null
+undefined
