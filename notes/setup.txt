@@ -20,3 +20,4 @@ sudo service postgresql start
 npx jest test/api.test.ts
 psql -d app -f create.sql
 sudo -u postgres psql
+kill -9 $(lsof -t -i:3000)  

@@ -15,7 +15,7 @@ test("Deve fazer o calculo do preço de uma corrida durante o dia", async () => 
   expect(output.price).toBe(21);
 });
 
-test.skip("Deve lançar um erro se a distancia for invalida", async () => {
+test("Deve lançar um erro se a distancia for invalida", async () => {
   const input = {
     segments: [
       {distance: -10, date: new Date("2021-03-01T10:00:00")}
@@ -70,7 +70,7 @@ test("Deve cadastrar um motorista", async () => {
     name: "John Doe",
     email: "john.doe@test.com",
     document: "834.326.160-74",
-    carPlate: "AAA999"
+    carPlate: "AAA9999"
   };
   const response = await axios.post("http://localhost:3000/drivers", input);
   const output = response.data;
@@ -82,7 +82,7 @@ test("Deve obter um motorista", async () => {
     name: "John Doe",
     email: "john.doe@test.com",
     document: "834.326.160-74",
-    carPlate: "AAA999"
+    carPlate: "AAA9999"
   };
   const responseCreateDriver = await axios.post("http://localhost:3000/drivers", input);
   const outputCreateDriver = responseCreateDriver.data;
@@ -91,15 +91,15 @@ test("Deve obter um motorista", async () => {
   expect(output.name).toBe("John Doe");
   expect(output.email).toBe("john.doe@test.com");
   expect(output.document).toBe("834.326.160-74");
-  expect(output.carPlate).toBe("AAA999");
+  expect(output.carPlate).toBe("AAA9999");
 });
 
 test("Não deve cadastrar um motorista com cpf invalido", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
-    document: "834.326.160-76",
-    carPlate: "AAA999"
+    document: "834.326.160-7",
+    carPlate: "AAA9999"
   };
   const response = await axios.post("http://localhost:3000/drivers", input);
   expect(response.status).toBe(422)

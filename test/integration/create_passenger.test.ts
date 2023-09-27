@@ -1,4 +1,3 @@
-import PassengerRepository from "../../src/application/repository/passenger_repository";
 import CreatePassenger from "../../src/application/usecase/create_passenger";
 import GetPassenger from "../../src/application/usecase/get_passenger";
 import PassengerRepositoryDatabase from "../../src/infra/repository/passenger_repository_database";

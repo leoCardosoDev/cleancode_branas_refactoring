@@ -1,15 +1,15 @@
 import DriverRepository from "../../src/application/repository/driver_repository";
 import CreateDriver from "../../src/application/usecase/create_driver";
 import GetDriver from "../../src/application/usecase/get_driver";
+import Driver from "../../src/domain/driver";
 import DriverRepositoryDatabase from "../../src/infra/repository/driver_repository_database";
-import sinon from "sinon";
 
 test("Deve cadastrar um motorista", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
     document: "834.326.160-74",
-    carPlate: "AAA999"
+    carPlate: "AAA9999"
   };
   const usecase = new CreateDriver(new DriverRepositoryDatabase());
   const output = await usecase.execute(input);
@@ -20,20 +20,14 @@ test("Deve obter um motorista com stub", async () => {
   const driverRepositoryStub: DriverRepository = {
     async save (driver: any): Promise<void> {},
     async get (driverId: string): Promise<any> {
-      return {
-        driver_id: "",
-        name: "John Doe",
-        email: "john.doe@test.com",
-        document: "834.326.160-74",
-        car_plate: "AAA999"
-      };
+      return Driver.create("John Doe","john.doe@test.com","834.326.160-74","AAA9999");
     }
   }
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
     document: "834.326.160-74",
-    carPlate: "AAA999"
+    carPlate: "AAA9999"
   };
   const create = new CreateDriver(driverRepositoryStub);
   const getId = await create.execute(input);
@@ -42,7 +36,7 @@ test("Deve obter um motorista com stub", async () => {
   expect(output.name).toBe("John Doe");
   expect(output.email).toBe("john.doe@test.com");
   expect(output.document).toBe("834.326.160-74");
-  expect(output.carPlate).toBe("AAA999");
+  expect(output.carPlate).toBe("AAA9999");
 });
 
 test("Deve obter um motorista com database", async () => {
@@ -50,7 +44,7 @@ test("Deve obter um motorista com database", async () => {
     name: "John Doe",
     email: "john.doe@test.com",
     document: "834.326.160-74",
-    carPlate: "AAA999"
+    carPlate: "AAA9999"
   };
   const create = new CreateDriver(new DriverRepositoryDatabase());
   const getId = await create.execute(input);
@@ -59,5 +53,5 @@ test("Deve obter um motorista com database", async () => {
   expect(output.name).toBe("John Doe");
   expect(output.email).toBe("john.doe@test.com");
   expect(output.document).toBe("834.326.160-74");
-  expect(output.carPlate).toBe("AAA999");
+  expect(output.carPlate).toBe("AAA9999");
 });

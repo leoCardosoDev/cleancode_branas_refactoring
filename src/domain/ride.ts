@@ -8,9 +8,10 @@ export default class Ride {
   NORMAL_FARE = 2.10;
   MIN_PRICE = 10;
   
-  constructor(){
-    this.segments = [];
+  constructor() {
+    this.segments = []
   }
+
   addSegment(distance: number, date: Date) {
     this.segments.push(new Segment(distance, date));
   }

@@ -1,4 +1,4 @@
-import Ride from "../src/ride";
+import Ride from "../../src/domain/ride";
 test("Deve fazer o calculo do preço de uma corrida durante o dia", () => {
   const ride = new Ride();
   ride.addSegment(10, new Date("2021-03-01T10:00:00"))

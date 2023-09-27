@@ -1,10 +1,15 @@
-import { calculate } from "../../../notes/before/calculate_rider_procedural";
+import Ride from "../../domain/ride";
 
 export default class CalculateRide {
+  
   constructor(){}
 
-  async execute(input: Input): Promise<Output> {
-    const price = calculate(input.segments);
+  async execute(input: Input): Promise<Output> { 
+    const ride = new Ride()
+    for (const segment of input.segments) {
+      ride.addSegment(segment.distance, new Date(segment.date));
+    }
+    const price = ride.calculate();
     return {
       price
     };

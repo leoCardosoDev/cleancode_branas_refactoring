@@ -6,11 +6,11 @@ export default class GetDriver {
   async execute(input: Input): Promise<Output> {  
     const driveData = await this.driverRepository.get(input.driverId);
     return {
-      driverId: driveData.driver_id,
+      driverId: driveData.driverId,
       name: driveData.name,
-      email: driveData.email,
-      document: driveData.document,
-      carPlate: driveData.car_plate
+      email: driveData.email.value,
+      document: driveData.document.value,
+      carPlate: driveData.carPlate.value
     };
   }
 }

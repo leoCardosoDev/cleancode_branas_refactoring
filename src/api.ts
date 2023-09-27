@@ -14,8 +14,8 @@ app.use(express.json());
 app.post("/calculate_ride", async function (req, res) {
   try {
     const usecase = new CalculateRide();
-    const price = await usecase.execute(req.body)
-    return res.json(price);
+    const output = await usecase.execute(req.body)
+    return res.json(output);
   } catch (error: any) {
     res.status(422).send(error.message)
   }
