@@ -2,6 +2,7 @@ import DriverRepository from "../../src/application/repository/driver_repository
 import CreateDriver from "../../src/application/usecase/create_driver";
 import GetDriver from "../../src/application/usecase/get_driver";
 import Driver from "../../src/domain/driver";
+import PgPromiseAdapter from "../../src/infra/database/pg_promise_adapter";
 import DriverRepositoryDatabase from "../../src/infra/repository/driver_repository_database";
 
 test("Deve cadastrar um motorista", async () => {
@@ -11,9 +12,11 @@ test("Deve cadastrar um motorista", async () => {
     document: "834.326.160-74",
     carPlate: "AAA9999"
   };
-  const usecase = new CreateDriver(new DriverRepositoryDatabase());
+  const connection = new PgPromiseAdapter();
+  const usecase = new CreateDriver(new DriverRepositoryDatabase(connection));
   const output = await usecase.execute(input);
   expect(output.driverId).toBeDefined();
+  await connection.close();
 });
 
 test("Deve obter um motorista com stub", async () => {
@@ -46,12 +49,14 @@ test("Deve obter um motorista com database", async () => {
     document: "834.326.160-74",
     carPlate: "AAA9999"
   };
-  const create = new CreateDriver(new DriverRepositoryDatabase());
+  const connection = new PgPromiseAdapter();
+  const create = new CreateDriver(new DriverRepositoryDatabase(connection));
   const getId = await create.execute(input);
-  const usecase = new GetDriver(new DriverRepositoryDatabase());
+  const usecase = new GetDriver(new DriverRepositoryDatabase(connection));
   const output = await usecase.execute({driverId: getId.driverId});
   expect(output.name).toBe("John Doe");
   expect(output.email).toBe("john.doe@test.com");
   expect(output.document).toBe("834.326.160-74");
   expect(output.carPlate).toBe("AAA9999");
+  await connection.close()
 });
