@@ -109,5 +109,5 @@
   "include": [
     "src",
     "test"
-, "notes/before/cpf_validator.ts", "notes/before/cpf_validator.test.ts", "notes/before/calculate_rider_procedural.ts", "notes/before/calculate_rider_procedural.test.ts"  ]
+, "notes/before/cpf_validator.ts", "notes/before/cpf_validator.test.ts", "notes/before/calculate_rider_procedural.ts", "notes/before/calculate_rider_procedural.test.ts", "notes/before/email_validator.ts", "notes/before/email_validator.test.ts"  ]
 }
