@@ -8,6 +8,7 @@ import PassengerRepositoryDatabase from "./infra/repository/passenger_repository
 import PgPromiseAdapter from "./infra/database/pg_promise_adapter";
 import MainController from "./infra/http/main_controller";
 import ExpressAdapter from "./infra/http/express_adapter";
+import HapiAdapter from "./infra/http/hapi_adapter";
 
 const connection = new PgPromiseAdapter();
 const passengerRepository = new PassengerRepositoryDatabase(connection);
@@ -17,6 +18,7 @@ const createPassenger = new CreatePassenger(passengerRepository);
 const getPassenger = new GetPassenger(passengerRepository);
 const createDriver = new CreateDriver(driverRepository);
 const getDriver = new GetDriver(driverRepository);
-const httpServer = new ExpressAdapter();
+// const httpServer = new ExpressAdapter();
+const httpServer = new HapiAdapter();
 new MainController(httpServer, calculateRide, createPassenger, getPassenger, createDriver, getDriver);
 httpServer.listen(3000);

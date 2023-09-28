@@ -24,7 +24,7 @@ export default class MainController {
       return output;
     });
     
-    httpServer.on("get", "/passengers/:passengerId", async function(params: any, body: any){
+    httpServer.on("get", "/passengers/:{passengerId}", async function(params: any, body: any){
       const output = await getPassenger.execute({passengerId: params.passengerId});
       return output;
     });
@@ -34,7 +34,7 @@ export default class MainController {
       return output;
     });
     
-    httpServer.on("get", "/drivers/:driverId", async function(params: any, body: any){
+    httpServer.on("get", "/drivers/:{driverId}", async function(params: any, body: any){
       const output = await getDriver.execute({driverId: params.driverId});
       return output;
     });
