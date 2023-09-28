@@ -1,4 +1,5 @@
-import Ride from "../../src/domain/ride";
+import Ride from "../../src/domain/ride/ride";
+
 test("Deve fazer o calculo do preço de uma corrida durante o dia", () => {
   const ride = new Ride();
   ride.addPosition(-27.584905257808835, -48.545022195325124, new Date("2021-03-01T10:00:00"));

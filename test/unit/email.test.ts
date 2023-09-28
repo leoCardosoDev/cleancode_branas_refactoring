@@ -1,4 +1,4 @@
-import Email from "../../src/domain/email";
+import Email from "../../src/domain/person/email";
 
 test("Deve retonar true se o email é válido", () => {
   const email = "john.doe@test.com";
