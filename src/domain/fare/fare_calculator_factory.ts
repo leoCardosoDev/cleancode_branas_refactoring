@@ -1,7 +1,7 @@
+import Segment from "../ride/segment";
 import NormalFareCalculator from "./normal_far_calculator";
 import OvernightSundayFareCalculator from "./overnight_sunday_fare_calculator";
 import OvernightFareCalculator from "./overnitght_fare_calculator";
-import Segment from "./segment";
 import SundayFareCalculator from "./sunday_fare_calculator";
 
 export default class FareCalculatorFactory {

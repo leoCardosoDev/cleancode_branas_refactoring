@@ -1,4 +1,4 @@
-import CPF from "../../src/domain/cpf";
+import CPF from "../../src/domain/person/cpf";
 
 test.each([
   "83432616074",

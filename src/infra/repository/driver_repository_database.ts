@@ -1,5 +1,5 @@
 import DriverRepository from "../../application/repository/driver_repository";
-import Driver from "../../domain/driver";
+import Driver from "../../domain/driver/driver";
 import DatabaseConnection from "../database/database_connection";
 
 export default class DriverRepositoryDatabase implements DriverRepository {

@@ -1,4 +1,4 @@
-import Passenger from "../../src/domain/passenger";
+import Passenger from "../../src/domain/passenger/passenger";
 
 test("Deve criar um passageiro", () => {
   const passenger = Passenger.create("John Doe", "john.doe@test.com", "83432616074");

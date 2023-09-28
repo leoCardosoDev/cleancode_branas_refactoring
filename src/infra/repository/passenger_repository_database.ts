@@ -1,5 +1,5 @@
 import PassengerRepository from "../../application/repository/passenger_repository";
-import Passenger from "../../domain/passenger";
+import Passenger from "../../domain/passenger/passenger";
 import DatabaseConnection from "../database/database_connection";
 
 export default class PassengerRepositoryDatabase implements PassengerRepository {

@@ -1,5 +1,5 @@
 import PassengerRepository from "../repository/passenger_repository";
-import Passenger from "../../domain/passenger";
+import Passenger from "../../domain/passenger/passenger";
 
 export default class CreatePassenger {
   constructor(readonly passengerRepository: PassengerRepository){}
