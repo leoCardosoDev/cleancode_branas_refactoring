@@ -21,3 +21,8 @@ npx jest test/api.test.ts
 psql -d app -f create.sql
 sudo -u postgres psql
 kill -9 $(lsof -t -i:3000)  
+
+
+lat and log
+-27.584905257808835, -48.545022195325124
+-27.496887588317275, -48.522234807851476
