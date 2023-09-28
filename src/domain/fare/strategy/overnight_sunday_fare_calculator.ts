@@ -1,8 +1,8 @@
-import Segment from "../ride/segment";
+import Segment from "../../ride/segment";
 import FareCalculator from "./fare_calculator";
 
-export default class SundayFareCalculator implements FareCalculator {
-  FARE = 2.9;
+export default class OvernightSundayFareCalculator implements FareCalculator {
+  FARE = 5;
   calculate(segment: Segment): number {
     return segment.distance * this.FARE;
   }

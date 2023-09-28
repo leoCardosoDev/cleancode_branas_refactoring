@@ -1,14 +1,24 @@
 import DistanceCalculator from "../distance/distance_calculator";
-import FareCalculatorFactory from "../fare/fare_calculator_factory";
+import FareCalculatorHandler from "../fare/chain_of_responsability/fare_calculator_handler";
+import NormalFareCalculatorHandler from "../fare/chain_of_responsability/normal_fare_calculator_handler";
+import OvernightFareCalculatorHandler from "../fare/chain_of_responsability/overnight_fare_calculator_handler";
+import OvernightSundayFareCalculatorHandler from "../fare/chain_of_responsability/overnight_sunday_fare_calculator_handler";
+import SundayFareCalculatorHandler from "../fare/chain_of_responsability/sunday_fare_calculator_handler";
+// import FareCalculatorFactory from "../fare/strategy/fare_calculator_factory";
 import Position from "./position";
 import Segment from "./segment";
-
+ 
 export default class Ride {
   positions: Position[];
   MIN_PRICE = 10;
+  fareCalculator: FareCalculatorHandler;
   
   constructor() {
     this.positions = [];
+    const overnightSundayCalculatorHandler = new OvernightSundayFareCalculatorHandler();
+    const sundayFareCalculatorHnadler = new SundayFareCalculatorHandler(overnightSundayCalculatorHandler);
+    const overnightFareCalculatorHandler = new OvernightFareCalculatorHandler(sundayFareCalculatorHnadler);
+    this.fareCalculator = new NormalFareCalculatorHandler(overnightFareCalculatorHandler);
   }
 
   addPosition(lat: number, long: number, date: Date) {
@@ -22,8 +32,9 @@ export default class Ride {
       if(!nextPosition) break;
       const distance = DistanceCalculator.calculate(position.coord, nextPosition.coord);
       const segment = new Segment(distance, nextPosition.date);
-      const fareCalculator = FareCalculatorFactory.create(segment);
-      price += fareCalculator.calculate(segment);
+      // const fareCalculator = FareCalculatorFactory.create(segment);
+      // price += fareCalculator.calculate(segment);
+      price += this.fareCalculator.handle(segment);
     }
     return price = (price < this.MIN_PRICE) ? this.MIN_PRICE : price;
   }

@@ -1,4 +1,4 @@
-import Segment from "../ride/segment";
+import Segment from "../../ride/segment";
 import NormalFareCalculator from "./normal_far_calculator";
 import OvernightSundayFareCalculator from "./overnight_sunday_fare_calculator";
 import OvernightFareCalculator from "./overnitght_fare_calculator";
