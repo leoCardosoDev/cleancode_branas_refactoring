@@ -1,13 +1,10 @@
 import DistanceCalculator from "./distance_calculator";
+import FareCalculatorFactory from "./fare_calculator_factory";
 import Position from "./position";
 import Segment from "./segment";
 
 export default class Ride {
   positions: Position[];
-  OVERNIGHT_FARE = 3.90;
-  OVERNIGHT_SUNDAY_FARE = 5;
-  SUNDAY_FARE = 2.90;
-  NORMAL_FARE = 2.10;
   MIN_PRICE = 10;
   
   constructor() {
@@ -25,18 +22,8 @@ export default class Ride {
       if(!nextPosition) break;
       const distance = DistanceCalculator.calculate(position.coord, nextPosition.coord);
       const segment = new Segment(distance, nextPosition.date);
-      if (segment.isOvernight() && !segment.isSunday()) {
-        price += segment.distance * this.OVERNIGHT_FARE;
-      }
-      if (segment.isOvernight() && segment.isSunday()) {
-        price += segment.distance * this.OVERNIGHT_SUNDAY_FARE;
-      }
-      if (!segment.isOvernight() && segment.isSunday()) {
-        price += segment.distance * this.SUNDAY_FARE;
-      }
-      if (!segment.isOvernight() && !segment.isSunday()) {
-        price += segment.distance * this.NORMAL_FARE;
-      }
+      const fareCalculator = FareCalculatorFactory.create(segment);
+      price += fareCalculator.calculate(segment);
     }
     return price = (price < this.MIN_PRICE) ? this.MIN_PRICE : price;
   }
