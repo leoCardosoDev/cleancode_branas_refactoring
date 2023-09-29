@@ -34,9 +34,3 @@ create table cccat12.ride (
   end_date timestamp,
   price numeric
 );
-
--- ride_id, passenger_id, from_lat, from_long, to_lat, to_long, request_date timestamp,
---   accept_date timestamp,
---   start_date timestamp,
---   end_date timestamp,
---   price numeric

@@ -14,8 +14,10 @@ export default class Ride {
   positions: Position[];
   MIN_PRICE = 10;
   fareCalculator: FareCalculatorHandler;
+  driverId?: string;
+  acceptDate?: Date;
   
-  constructor(readonly rideId: string, readonly passengerId: string, readonly from: Coord, readonly to: Coord, readonly status: string, readonly requestDate: Date) {
+  constructor(readonly rideId: string, readonly passengerId: string, readonly from: Coord, readonly to: Coord, public status: string, readonly requestDate: Date) {
     this.positions = [];
     const overnightSundayCalculatorHandler = new OvernightSundayFareCalculatorHandler();
     const sundayFareCalculatorHnadler = new SundayFareCalculatorHandler(overnightSundayCalculatorHandler);
@@ -39,6 +41,12 @@ export default class Ride {
       price += this.fareCalculator.handle(segment);
     }
     return price = (price < this.MIN_PRICE) ? this.MIN_PRICE : price;
+  }
+
+  accept(driverId: string, date: Date){
+    this.driverId = driverId;
+    this.status = "accepted";
+    this.acceptDate = date;
   }
 
   static create (passengerId: string, from: Coord, to: Coord, requestDate = new Date()) {
