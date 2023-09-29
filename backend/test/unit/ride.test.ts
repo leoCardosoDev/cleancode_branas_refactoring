@@ -45,23 +45,36 @@ test("Deve fazer o calculo de uma corrida durante o dia com preço minimo", () =
 
 test("Deve solicitar uma corrida", () => {
   const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
-  expect(ride.status).toBe("requested");
+  expect(ride.status.value).toBe("requested");
 });
 
 test("Deve aceitar uma corrida", () => {
   const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
   ride.accept("", new Date("2021-03-01T10:10:00"));
-  expect(ride.status).toBe("accepted");
+  expect(ride.status.value).toBe("accepted");
 });
 
 test("Deve iniciar uma corrida", () => {
   const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
+  ride.accept("", new Date("2021-03-01T10:10:00"));
   ride.start(new Date("2021-03-01T10:20:00"));
-  expect(ride.status).toBe("in_progress");
+  expect(ride.status.value).toBe("in_progress");
 });
 
 test("Deve finalizar uma corrida", () => {
   const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
+  ride.accept("", new Date("2021-03-01T10:10:00"));
+  ride.start(new Date("2021-03-01T10:20:00"));
   ride.end(new Date("2021-03-01T10:30:00"));
-  expect(ride.status).toBe("completed");
+  expect(ride.status.value).toBe("completed");
+});
+
+test("Não pode iniciar uma corrida, caso ela não tiver sido aceita", () => {
+  const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
+  expect(() => ride.start(new Date("2021-03-01T09:30:00"))).toThrowError("Invalid status");
+});
+
+test("Não pode finalizar uma corrida, caso ela não tiver sido iniciada", () => {
+  const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
+  expect(() => ride.end(new Date("2021-03-01T09:30:00"))).toThrowError("Invalid status");
 });
