@@ -1,9 +1,11 @@
+import Coord from "../distance/coord";
 import DistanceCalculator from "../distance/distance_calculator";
 import FareCalculatorHandler from "../fare/chain_of_responsability/fare_calculator_handler";
 import NormalFareCalculatorHandler from "../fare/chain_of_responsability/normal_fare_calculator_handler";
 import OvernightFareCalculatorHandler from "../fare/chain_of_responsability/overnight_fare_calculator_handler";
 import OvernightSundayFareCalculatorHandler from "../fare/chain_of_responsability/overnight_sunday_fare_calculator_handler";
 import SundayFareCalculatorHandler from "../fare/chain_of_responsability/sunday_fare_calculator_handler";
+import UUIDGenetator from "../person/uuid_generator";
 // import FareCalculatorFactory from "../fare/strategy/fare_calculator_factory";
 import Position from "./position";
 import Segment from "./segment";
@@ -13,7 +15,7 @@ export default class Ride {
   MIN_PRICE = 10;
   fareCalculator: FareCalculatorHandler;
   
-  constructor() {
+  constructor(readonly rideId: string, readonly passengerId: string, readonly from: Coord, readonly to: Coord, readonly status: string, readonly requestDate: Date) {
     this.positions = [];
     const overnightSundayCalculatorHandler = new OvernightSundayFareCalculatorHandler();
     const sundayFareCalculatorHnadler = new SundayFareCalculatorHandler(overnightSundayCalculatorHandler);
@@ -37,5 +39,11 @@ export default class Ride {
       price += this.fareCalculator.handle(segment);
     }
     return price = (price < this.MIN_PRICE) ? this.MIN_PRICE : price;
+  }
+
+  static create (passengerId: string, from: Coord, to: Coord, requestDate = new Date()) {
+    const rideId = UUIDGenetator.create();
+    const status = "requested";
+    return new Ride(rideId, passengerId, from, to, status, requestDate);
   }
 }
