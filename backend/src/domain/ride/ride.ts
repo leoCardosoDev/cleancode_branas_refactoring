@@ -17,6 +17,7 @@ export default class Ride {
   driverId?: string;
   acceptDate?: Date;
   startDate?: Date;
+  endDate?: Date;
   
   constructor(readonly rideId: string, readonly passengerId: string, readonly from: Coord, readonly to: Coord, public status: string, readonly requestDate: Date) {
     this.positions = [];
@@ -44,6 +45,12 @@ export default class Ride {
     return price = (price < this.MIN_PRICE) ? this.MIN_PRICE : price;
   }
 
+  static create (passengerId: string, from: Coord, to: Coord, requestDate = new Date()) {
+    const rideId = UUIDGenetator.create();
+    const status = "requested";
+    return new Ride(rideId, passengerId, from, to, status, requestDate);
+  }
+
   accept(driverId: string, date: Date){
     this.driverId = driverId;
     this.status = "accepted";
@@ -55,9 +62,8 @@ export default class Ride {
     this.startDate = date;
   }
 
-  static create (passengerId: string, from: Coord, to: Coord, requestDate = new Date()) {
-    const rideId = UUIDGenetator.create();
-    const status = "requested";
-    return new Ride(rideId, passengerId, from, to, status, requestDate);
+  end(date: Date){
+    this.status = "completed";
+    this.endDate = date;
   }
 }

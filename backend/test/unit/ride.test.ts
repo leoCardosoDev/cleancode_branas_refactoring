@@ -59,3 +59,9 @@ test("Deve iniciar uma corrida", () => {
   ride.start(new Date("2021-03-01T10:20:00"));
   expect(ride.status).toBe("in_progress");
 });
+
+test("Deve finalizar uma corrida", () => {
+  const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
+  ride.end(new Date("2021-03-01T10:30:00"));
+  expect(ride.status).toBe("completed");
+});
