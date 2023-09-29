@@ -16,6 +16,7 @@ export default class Ride {
   fareCalculator: FareCalculatorHandler;
   driverId?: string;
   acceptDate?: Date;
+  startDate?: Date;
   
   constructor(readonly rideId: string, readonly passengerId: string, readonly from: Coord, readonly to: Coord, public status: string, readonly requestDate: Date) {
     this.positions = [];
@@ -47,6 +48,11 @@ export default class Ride {
     this.driverId = driverId;
     this.status = "accepted";
     this.acceptDate = date;
+  }
+
+  start(date: Date){
+    this.status = "in_progress";
+    this.startDate = date;
   }
 
   static create (passengerId: string, from: Coord, to: Coord, requestDate = new Date()) {

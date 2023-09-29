@@ -50,6 +50,12 @@ test("Deve solicitar uma corrida", () => {
 
 test("Deve aceitar uma corrida", () => {
   const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
-  ride.accept("", new Date("2021-03-01T10:00:00"));
+  ride.accept("", new Date("2021-03-01T10:10:00"));
   expect(ride.status).toBe("accepted");
+});
+
+test("Deve iniciar uma corrida", () => {
+  const ride = Ride.create("", new Coord(0,0), new Coord(0,0));
+  ride.start(new Date("2021-03-01T10:20:00"));
+  expect(ride.status).toBe("in_progress");
 });

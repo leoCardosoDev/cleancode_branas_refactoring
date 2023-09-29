@@ -17,11 +17,12 @@ export default class RideRepositoryDatabase implements RideRepository {
     const ride = new Ride(rideData.ride_id, rideData.passenger_id, new Coord(parseFloat(rideData.from_lat), parseFloat(rideData.from_long)), new Coord(parseFloat(rideData.to_lat), parseFloat(rideData.to_long)), rideData.status, rideData.request_date);
     ride.driverId = rideData.driver_id;
     ride.acceptDate = rideData.accept_date;
+    ride.startDate = rideData.start_date;
     return ride;
   }
 
   async update(ride: Ride): Promise<void> {
-    await this.connection.query("update cccat12.ride set driver_id = $1, status = $2, accept_date = $3 where ride_id = $4", [ride.driverId, ride.status, ride.acceptDate, ride.rideId]);
+    await this.connection.query("update cccat12.ride set driver_id = $1, status = $2, accept_date = $3, start_date = $4 where ride_id = $5", [ride.driverId, ride.status, ride.acceptDate, ride.startDate, ride.rideId]);
   }
   
 }

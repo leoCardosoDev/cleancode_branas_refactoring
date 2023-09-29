@@ -3,12 +3,13 @@ import CreateDriver from "../../src/application/usecase/create_driver";
 import CreatePassenger from "../../src/application/usecase/create_passenger";
 import GetRide from "../../src/application/usecase/get_ride";
 import RequestRide from "../../src/application/usecase/request_ride";
+import StartRide from "../../src/application/usecase/start_ride";
 import PgPromiseAdapter from "../../src/infra/database/pg_promise_adapter";
 import DriverRepositoryDatabase from "../../src/infra/repository/driver_repository_database";
 import PassengerRepositoryDatabase from "../../src/infra/repository/passenger_repository_database";
 import RideRepositoryDatabase from "../../src/infra/repository/ride_repository_database";
 
-test("Deve aceitar uma corrida", async function () {
+test("Deve iniciar uma corrida", async function () {
 	const inputCreatePassenger = {
 		name: "John Doe",
 		email: "john.doe@gmail.com",
@@ -47,14 +48,19 @@ test("Deve aceitar uma corrida", async function () {
 		driverId: outputCreateDriver.driverId,
 		date: new Date("2021-03-01T10:10:00")
 	};
-  
 	const acceptRide = new AcceptRide(new RideRepositoryDatabase(connection));
 	await acceptRide.execute(inputAcceptRide);
+  const inputStartRide = {
+    rideId: outputRequestRide.rideId,
+    date: new Date("2021-03-01T10:20:00")
+  };
+  const startRide = new StartRide(new RideRepositoryDatabase(connection));
+  await startRide.execute(inputStartRide);
 
 	const getRide = new GetRide(new RideRepositoryDatabase(connection));
 	const outputGetRide = await getRide.execute({ rideId: outputRequestRide.rideId });
 	expect(outputGetRide.driverId).toBe(outputCreateDriver.driverId);
-	expect(outputGetRide.status).toBe("accepted");
-	expect(outputGetRide.acceptDate).toEqual(new Date("2021-03-01T10:10:00"));
+	expect(outputGetRide.status).toBe("in_progress");
+	expect(outputGetRide.startDate).toEqual(new Date("2021-03-01T10:20:00"));
 	await connection.close();
 });
