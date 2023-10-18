@@ -1,9 +1,9 @@
-import axios from 'axios'
 import DriverGateway from './driver_gateway'
+import HttpClient from '../http/http_client'
 
 export default class DriverGatewayHttp implements DriverGateway {
-  async save(driver: any) {
-    const response = await axios.post('http://localhost:3000/drivers', driver)
-    return response.data
+  constructor (readonly httpClient: HttpClient) {}
+  async save(driver: any) { 
+    return await this.httpClient.post('http://localhost:3000/drivers', driver)
   }
 }
