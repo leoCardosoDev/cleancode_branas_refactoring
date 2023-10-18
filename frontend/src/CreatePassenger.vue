@@ -1,25 +1,29 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
 import PassengerGateway from './infra/gateway/passenger_gateway';
-import Passenger from './domain/passenger/passenger';
+import { PassengerBuilder } from './domain/passenger';
 
-const passenger = ref(new Passenger('', '', '', ''))
-const passengerId = ref('')
+const passengerBuilder = ref(new PassengerBuilder())
+const passenger = ref()
 const passengerGateway = inject('passengerGateway') as PassengerGateway
  
 async function createPassenger() {
-  passengerId.value = await passengerGateway.save(passenger.value)
+  passenger.value = passengerBuilder.value.build()
+  passenger.value.passengerId = await passengerGateway.create(passenger.value)
 }
 
 </script>
 
 <template>
   <div>
-    <input class="passenger-name" v-model="passenger.name">
-    <input class="passenger-email" v-model="passenger.email">
-    <input class="passenger-document" v-model="passenger.document">
+    <input class="passenger-name" v-model="passengerBuilder.name">
+    <input class="passenger-email" v-model="passengerBuilder.email">
+    <input class="passenger-document" v-model="passengerBuilder.document">
     <button class="create-passenger-button" @click="createPassenger()">Create Passenger</button>
-    <div class="passenger-id">{{ passengerId }}</div>
+    <div v-if="passenger">
+      <div class="passenger-id">{{ passenger.passengerId }}</div>
+    </div>
+    
   </div>
 </template>
 
