@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --dom"
   },
   "dependencies": {
+    "@vue/test-utils": "^2.4.1",
+    "happy-dom": "^12.9.1",
+    "vitest": "^0.34.6",
     "vue": "^3.3.4"
   },
   "devDependencies": {
