@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import CreatePassenger from '../src/CreatePassenger.vue'
+import CreateDriverVue from '../src/CreateDriver.vue'
 
 function sleep (time: number) {
   return new Promise((resolve) => {
@@ -9,12 +9,13 @@ function sleep (time: number) {
   })
 }
 
-test('Deve criar um passageiro', async () => {
-  const wrapper = mount(CreatePassenger, {})
-  await wrapper.get('.passenger-name').setValue('John Doe')
-  await wrapper.get('.passenger-email').setValue('john.doe@test.com')
-  await wrapper.get('.passenger-document').setValue('834.326.160-74')
-  await wrapper.get('.create-passenger-button').trigger('click')
+test('Deve criar um motorista', async () => {
+  const wrapper = mount(CreateDriverVue, {})
+  await wrapper.get('.driver-name').setValue('John Doe')
+  await wrapper.get('.driver-email').setValue('john.doe@test.com')
+  await wrapper.get('.driver-document').setValue('834.326.160-74')
+  await wrapper.get('.driver-car-plate').setValue('AAA9999')
+  await wrapper.get('.create-driver-button').trigger('click')
   await sleep(200)
-  expect(wrapper.get('.passenger-id').text()).toHaveLength(36)
+  expect(wrapper.get('.driver-id').text()).toHaveLength(36)
 })
