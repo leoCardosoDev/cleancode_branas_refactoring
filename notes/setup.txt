@@ -3,7 +3,7 @@
 3 - npx tsc --init
 4 - npx ts-jest config:init
 5 - npx jest
-6 - npx nodemon src/main.ts
+6 - npx nodemon src/main_api.ts
 
 83432616074
 74587887803
