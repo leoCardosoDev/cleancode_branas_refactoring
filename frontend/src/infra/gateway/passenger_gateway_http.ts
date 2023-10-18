@@ -5,6 +5,7 @@ import Passenger from '../../domain/passenger/passenger'
 export default class PassengerGatewayHttp implements PassengerGateway {
   constructor (readonly httpClient: HttpClient) {}
   async save(passenger: Passenger) {
-    return await this.httpClient.post('http://localhost:3000/passengers', passenger)
+    const passengerData = await this.httpClient.post('http://localhost:3000/passengers', passenger)
+    return passengerData.passengerId
   }
 }

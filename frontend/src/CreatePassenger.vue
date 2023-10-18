@@ -8,8 +8,7 @@ const passengerId = ref('')
 const passengerGateway = inject('passengerGateway') as PassengerGateway
  
 async function createPassenger() {
-  const output = await passengerGateway.save(passenger.value)
-  passengerId.value = output.passengerId
+  passengerId.value = await passengerGateway.save(passenger.value)
 }
 
 </script>

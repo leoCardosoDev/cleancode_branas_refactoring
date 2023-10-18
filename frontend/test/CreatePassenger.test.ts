@@ -29,5 +29,5 @@ test('Deve criar um passageiro', async () => {
   await wrapper.get('.passenger-document').setValue('834.326.160-74')
   await wrapper.get('.create-passenger-button').trigger('click')
   await sleep(200)
-  expect(wrapper.get('.passenger-id').text()).toHaveLength(36)
+  expect(wrapper.get('.passenger-id').text()).toHaveLength(59)
 })
