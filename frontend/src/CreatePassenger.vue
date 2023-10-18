@@ -5,11 +5,17 @@ import { PassengerBuilder } from './domain/passenger';
 
 const passengerBuilder = ref(new PassengerBuilder())
 const passenger = ref()
+const error = ref('')
 const passengerGateway = inject('passengerGateway') as PassengerGateway
  
 async function createPassenger() {
-  passenger.value = passengerBuilder.value.build()
-  passenger.value.passengerId = await passengerGateway.create(passenger.value)
+  try {
+    error.value = ''
+    passenger.value = passengerBuilder.value.build()
+    passenger.value.passengerId = await passengerGateway.create(passenger.value)
+  } catch (e: any) {
+    error.value = e.message
+  }
 }
 
 </script>
@@ -20,6 +26,7 @@ async function createPassenger() {
     <input class="passenger-email" v-model="passengerBuilder.email">
     <input class="passenger-document" v-model="passengerBuilder.document">
     <button class="create-passenger-button" @click="createPassenger()">Create Passenger</button>
+    <div class="error">{{ error }}</div>
     <div v-if="passenger">
       <div class="passenger-id">{{ passenger.passengerId }}</div>
     </div>
