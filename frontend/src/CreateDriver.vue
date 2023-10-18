@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import axios from 'axios'
+import { inject, ref } from 'vue'
+import DriverGateway from './infra/gateway/driver_gateway'
 
 const name = ref('')
 const email = ref('')
 const driverId = ref('')
 const carPlate = ref('')
 const document = ref('')
+
+const driverGateway = inject('driverGateway') as DriverGateway
 
 async function createDriver() {
   const input = {
@@ -15,8 +17,10 @@ async function createDriver() {
     document: document.value,
     carPlate: carPlate.value
   }
-  const response = await axios.post('http://localhost:3000/drivers', input)
-  const output = response.data
+  // const response = await axios.post('http://localhost:3000/drivers', input)
+  // const output = response.data
+  // const driverGatewayHttp = new DriverGatewayHttp()
+  const output = await driverGateway.save(input)
   driverId.value = output.driverId
 }
 
