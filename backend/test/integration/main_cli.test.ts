@@ -4,7 +4,7 @@ import InputOutput from "../../src/infra/cli/input_output";
 import PgPromiseAdapter from "../../src/infra/database/pg_promise_adapter";
 import PassengerRepositoryDatabase from "../../src/infra/repository/passenger_repository_database";
 
-test.skip("Deve criar um passageiro usando o cli", async() => {
+test("Deve criar um passageiro usando o cli", async() => {
   const output:any = [];
   const connection = new PgPromiseAdapter();
   const passegerRepository = new PassengerRepositoryDatabase(connection);

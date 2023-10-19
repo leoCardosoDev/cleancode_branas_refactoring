@@ -11,18 +11,22 @@ import ExpressAdapter from "./infra/http/express_adapter";
 import HapiAdapter from "./infra/http/hapi_adapter";
 import RequestRide from "./application/usecase/request_ride";
 import RideRepositoryDatabase from "./infra/repository/ride_repository_database";
+import RepositoryFactoryDatabase from "./infra/factory/repository_factory_database";
+import UsecaseFactory from "./application/factory/usecase_factory";
 
 const connection = new PgPromiseAdapter();
-const passengerRepository = new PassengerRepositoryDatabase(connection);
-const driverRepository = new DriverRepositoryDatabase(connection);
-const rideRepository = new RideRepositoryDatabase(connection);
-const calculateRide = new CalculateRide();
-const createPassenger = new CreatePassenger(passengerRepository);
-const getPassenger = new GetPassenger(passengerRepository);
-const createDriver = new CreateDriver(driverRepository);
-const getDriver = new GetDriver(driverRepository);
-const requestRide = new RequestRide(rideRepository)
+const repositoryFactory = new RepositoryFactoryDatabase(connection)
+const usecaseFactory = new UsecaseFactory(repositoryFactory)
+// const passengerRepository = new PassengerRepositoryDatabase(connection);
+// const driverRepository = new DriverRepositoryDatabase(connection);
+// const rideRepository = new RideRepositoryDatabase(connection);
+// const calculateRide = new CalculateRide();
+// const createPassenger = new CreatePassenger(passengerRepository);
+// const getPassenger = new GetPassenger(passengerRepository);
+// const createDriver = new CreateDriver(driverRepository);
+// const getDriver = new GetDriver(driverRepository);
+// const requestRide = new RequestRide(rideRepository)
 const httpServer = new ExpressAdapter();
 // const httpServer = new HapiAdapter();
-new MainController(httpServer, calculateRide, createPassenger, getPassenger, createDriver, getDriver, requestRide);
+new MainController(httpServer, usecaseFactory);
 httpServer.listen(3000);

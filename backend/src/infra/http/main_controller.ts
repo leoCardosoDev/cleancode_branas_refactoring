@@ -1,48 +1,35 @@
-import CalculateRide from "../../application/usecase/calculate_ride";
-import CreateDriver from "../../application/usecase/create_driver";
-import CreatePassenger from "../../application/usecase/create_passenger";
-import GetDriver from "../../application/usecase/get_driver";
-import GetPassenger from "../../application/usecase/get_passenger";
-import RequestRide from "../../application/usecase/request_ride";
+import UsecaseFactory from "../../application/factory/usecase_factory";
 import HttpServer from "./http_server";
 
 export default class MainController {
-  constructor(
-    httpServer: HttpServer,
-    calculateRide: CalculateRide,
-    createPassenger: CreatePassenger,
-    getPassenger: GetPassenger,
-    createDriver: CreateDriver,
-    getDriver: GetDriver,
-    requestRide: RequestRide
-  ) {
+  constructor(httpServer: HttpServer, usecaseFactory: UsecaseFactory) {
     httpServer.on("post", "/calculate_ride", async function (params: any, body: any) {
-      const output = await calculateRide.execute(body)
+      const output = await usecaseFactory.createCalculateRide().execute(body)
       return output;
     });
     
     httpServer.on("post", "/passengers", async function(params: any, body: any) {
-      const output = await createPassenger.execute(body)
+      const output = await usecaseFactory.createCreatePassenger().execute(body)
       return output;
     });
     
     httpServer.on("get", "/passengers/:{passengerId}", async function(params: any, body: any){
-      const output = await getPassenger.execute({passengerId: params.passengerId});
+      const output = await usecaseFactory.createGetPassenger().execute({passengerId: params.passengerId});
       return output;
     });
     
     httpServer.on("post", "/drivers", async function(params: any, body: any) {
-      const output = await createDriver.execute(body)
+      const output = await usecaseFactory.createCreateDriver().execute(body)
       return output;
     });
     
     httpServer.on("get", "/drivers/:{driverId}", async function(params: any, body: any){
-      const output = await getDriver.execute({driverId: params.driverId});
+      const output = await usecaseFactory.createGetDriver().execute({driverId: params.driverId});
       return output;
     });
 
     httpServer.on("post", "/request_ride", async function (params: any, body: any) {
-      const output = await requestRide.execute(body)
+      const output = await usecaseFactory.createRequestRide().execute(body)
       return output;
     });
   }
