@@ -19,6 +19,7 @@ test('O passageiro deve calcular o preço de uma corrida', async () => {
       }
     }
   })
+
   await wrapper.get('.ride-from-lat').setValue('-27.584905257808835')
   await wrapper.get('.ride-from-long').setValue('-48.545022195325124')
   await wrapper.get('.ride-to-lat').setValue('-27.496887588317275')
