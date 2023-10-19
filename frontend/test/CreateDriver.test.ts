@@ -12,9 +12,8 @@ function sleep (time: number) {
 
 test('Deve criar um motorista', async () => {
   const driverGateway: DriverGateway = {
-    async save(driver: any): Promise<any> {
-      driver = {}
-      return {driverId: 'e3593f70-62fc-43f0-b58a-69307b4eb87e'}
+    async create(): Promise<any> {
+      return 'e3593f70-62fc-43f0-b58a-69307b4eb87e'
     }
   }
   const wrapper = mount(CreateDriverVue, {

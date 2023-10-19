@@ -1,35 +1,35 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
 import DriverGateway from './infra/gateway/driver_gateway'
+import { DriverBuilder } from './domain/driver';
 
-const name = ref('')
-const email = ref('')
-const driverId = ref('')
-const carPlate = ref('')
-const document = ref('')
-
+const driverBuilder = ref(new DriverBuilder())
+const driver = ref()
+const error = ref('')
 const driverGateway = inject('driverGateway') as DriverGateway
 
 async function createDriver() {
-  const input = {
-    name: name.value,
-    email: email.value,
-    document: document.value,
-    carPlate: carPlate.value
+  try {
+    error.value = ''
+    driver.value = driverBuilder.value.build()
+    driver.value.driverId = await driverGateway.create(driver.value)
+  } catch (e: any){
+    error.value = e.message
   }
-  const output = await driverGateway.save(input)
-  driverId.value = output.driverId
 }
 </script>
 
 <template>
   <div>
-    <input class="driver-name" v-model="name">
-    <input class="driver-email" v-model="email">
-    <input class="driver-document" v-model="document">
-    <input class="driver-car-plate" v-model="carPlate">
+    <input class="driver-name" v-model="driverBuilder.name">
+    <input class="driver-email" v-model="driverBuilder.email">
+    <input class="driver-document" v-model="driverBuilder.document">
+    <input class="driver-car-plate" v-model="driverBuilder.carPlate">
     <button class="create-driver-button" @click="createDriver()">Create Driver</button>
-    <div class="driver-id">{{ driverId }}</div>
+    <div class="error">{{ error }}</div>
+    <div v-if="driver">
+      <div class="driver-id">{{ driver.driverId }}</div>
+    </div>
   </div>
 </template>
 

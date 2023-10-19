@@ -1,3 +1,10 @@
 export default interface DriverGateway {
-    save(driver: any): Promise<any>
+    create(driver: any): Promise<any>
+}
+
+export type CreateDriverInput = {
+  name: string,
+  email: string,
+  document: string,
+  carPlate: string
 }

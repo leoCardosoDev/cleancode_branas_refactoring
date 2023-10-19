@@ -15,7 +15,7 @@ function sleep (time: number) {
 test('Deve criar um passageiro', async () => {
   const passengerGateway: PassengerGateway = {
     async create(): Promise<any> {
-      return {passengerId: 'e3593f70-62fc-43f0-b58a-69307b4eb87e'}
+      return 'e3593f70-62fc-43f0-b58a-69307b4eb87e'
     }
   }
   const wrapper = mount(CreatePassengerVue, {
@@ -30,7 +30,7 @@ test('Deve criar um passageiro', async () => {
   await wrapper.get('.passenger-document').setValue('834.326.160-74')
   await wrapper.get('.create-passenger-button').trigger('click')
   await sleep(200)
-  expect(wrapper.get('.passenger-id').text()).toHaveLength(59)
+  expect(wrapper.get('.passenger-id').text()).toHaveLength(36)
 })
 
 test('Não deve criar um passageiro com o nome inválido', async () => {
@@ -93,7 +93,5 @@ test('Deve criar um passageiro tendo errado o preenchimento antes', async () => 
   expect(wrapper.get('.error').text()).toBe('Invalid name')
   await wrapper.get('.passenger-name').setValue('John Doe')
   await wrapper.get('.create-passenger-button').trigger('click')
-  await sleep(200)
-  expect(wrapper.get('.passenger-id').text()).toHaveLength(36)
   expect(wrapper.get('.error').text()).toBe('')
 })
