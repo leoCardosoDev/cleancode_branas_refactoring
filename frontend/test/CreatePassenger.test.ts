@@ -14,8 +14,7 @@ function sleep (time: number) {
 
 test('Deve criar um passageiro', async () => {
   const passengerGateway: PassengerGateway = {
-    async create(passenger: any): Promise<any> {
-      passenger = {}
+    async create(): Promise<any> {
       return {passengerId: 'e3593f70-62fc-43f0-b58a-69307b4eb87e'}
     }
   }
