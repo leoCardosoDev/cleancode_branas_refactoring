@@ -6,6 +6,7 @@ import GetRide from "../../src/application/usecase/get_ride";
 import RequestRide from "../../src/application/usecase/request_ride";
 import StartRide from "../../src/application/usecase/start_ride";
 import PgPromiseAdapter from "../../src/infra/database/pg_promise_adapter";
+import RepositoryFactoryDatabase from "../../src/infra/factory/repository_factory_database";
 import DriverRepositoryDatabase from "../../src/infra/repository/driver_repository_database";
 import PassengerRepositoryDatabase from "../../src/infra/repository/passenger_repository_database";
 import RideRepositoryDatabase from "../../src/infra/repository/ride_repository_database";
@@ -66,7 +67,7 @@ test("Deve finalizar uma corrida", async function () {
   const endRide = new EndRide(new RideRepositoryDatabase(connection));
   await endRide.execute(inputEndRide);
 
-	const getRide = new GetRide(new RideRepositoryDatabase(connection));
+	const getRide = new GetRide(new RepositoryFactoryDatabase(connection));
 	const outputGetRide = await getRide.execute({ rideId: outputRequestRide.rideId });
 	expect(outputGetRide.driverId).toBe(outputCreateDriver.driverId);
 	expect(outputGetRide.status).toBe("completed");
