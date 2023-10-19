@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
-import PassengerGateway from './infra/gateway/passenger_gateway';
-import { PassengerBuilder } from './domain/passenger';
+import PassengerGateway from '../infra/gateway/passenger_gateway';
+import { PassengerBuilder } from '../domain/passenger';
 
 const passengerBuilder = ref(new PassengerBuilder())
 const passenger = ref()
