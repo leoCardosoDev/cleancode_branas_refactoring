@@ -62,7 +62,7 @@ test('O passageiro deve solicitar uma corrida', async () => {
   const passengerId = wrapperCreatePassenger.get('.passenger-id').text()
   const geoLocation: GeoLocation = {
     async getCoord (): Promise<Coord> {
-      return await new Coord(-27.584905257808835, -48.545022195325124)
+      return new Coord(-27.584905257808835, -48.545022195325124)
     }
   }
   const wrapperPassengerRide = mount(PassengerRideVue, {
