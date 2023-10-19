@@ -1,6 +1,6 @@
 import Ride from '../../domain/ride'
 import HttpClient from '../http/http_client'
-import RideGateway, { CalculateRideInput } from './ride_gateway'
+import RideGateway, { CalculateRideInput, RequestRideInput } from './ride_gateway'
 
 export default class RideGatewayHttp implements RideGateway {
 
@@ -15,5 +15,22 @@ export default class RideGatewayHttp implements RideGateway {
     }
     const output = await this.httpClient.post('http://localhost:3000/calculate_ride', input)
     return output.price
+  }
+
+  async request(ride: Ride): Promise<string> {
+    const input: RequestRideInput = {
+      passengerId: ride.passengerId,
+      from: {
+        lat: ride.from.lat,
+        long: ride.from.long
+      },
+      to: {
+        lat: ride.to.lat,
+        long: ride.to.long
+      },
+      date: new Date()
+    }
+    const output = await this.httpClient.post('http://localhost:3000/request_ride', input)
+    return output.rideId
   }
 }
