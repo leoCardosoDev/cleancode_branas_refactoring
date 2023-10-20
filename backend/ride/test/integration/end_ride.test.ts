@@ -1,14 +1,12 @@
 import AcceptRide from "../../src/application/usecase/accept_ride";
-import CreateDriver from "../../src/application/usecase/create_driver";
-import CreatePassenger from "../../src/application/usecase/create_passenger";
 import EndRide from "../../src/application/usecase/end_ride";
 import GetRide from "../../src/application/usecase/get_ride";
 import RequestRide from "../../src/application/usecase/request_ride";
 import StartRide from "../../src/application/usecase/start_ride";
 import PgPromiseAdapter from "../../src/infra/database/pg_promise_adapter";
 import RepositoryFactoryDatabase from "../../src/infra/factory/repository_factory_database";
-import DriverRepositoryDatabase from "../../src/infra/repository/driver_repository_database";
-import PassengerRepositoryDatabase from "../../src/infra/repository/passenger_repository_database";
+import AccountGatewayHttp from "../../src/infra/gateway/account_gateway_http";
+import AxiosAdapter from "../../src/infra/http/axios_adapter";
 import RideRepositoryDatabase from "../../src/infra/repository/ride_repository_database";
 
 test("Deve finalizar uma corrida", async function () {
@@ -18,8 +16,8 @@ test("Deve finalizar uma corrida", async function () {
 		document: "83432616074"
 	};
 	const connection = new PgPromiseAdapter();
-	const createPassenger = new CreatePassenger(new PassengerRepositoryDatabase(connection));
-	const outputCreatePassenger = await createPassenger.execute(inputCreatePassenger);
+	const accountGateway = new AccountGatewayHttp(new AxiosAdapter())
+	const outputCreatePassenger = await accountGateway.createPassenger(inputCreatePassenger);
 
 	const inputRequestRide = {
 		passengerId: outputCreatePassenger.passengerId,
@@ -42,8 +40,8 @@ test("Deve finalizar uma corrida", async function () {
 		document: "83432616074",
 		carPlate: "AAA9999"
 	};
-	const createDriver = new CreateDriver(new DriverRepositoryDatabase(connection));
-	const outputCreateDriver = await createDriver.execute(inputCreateDriver);
+
+	const outputCreateDriver = await accountGateway.createDriver(inputCreateDriver);
 
 	const inputAcceptRide = {
 		rideId: outputRequestRide.rideId,
@@ -64,7 +62,7 @@ test("Deve finalizar uma corrida", async function () {
     rideId: outputRequestRide.rideId,
     date: new Date("2021-03-01T10:30:00")
   };
-  const endRide = new EndRide(new RideRepositoryDatabase(connection), new PassengerRepositoryDatabase(connection));
+  const endRide = new EndRide(new RideRepositoryDatabase(connection));
   await endRide.execute(inputEndRide);
 
 	const getRide = new GetRide(new RepositoryFactoryDatabase(connection));

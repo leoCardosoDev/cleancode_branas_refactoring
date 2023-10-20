@@ -1,7 +1,7 @@
 import CarPlate from "./car_plate";
 import CPF from "../person/cpf";
 import Email from "../person/email";
-import UUIDGenetator from "../person/uuid_generator";
+import UUIDGenetator from '../identity/uuid_generator'
 
 export default class Driver {
   document: CPF;

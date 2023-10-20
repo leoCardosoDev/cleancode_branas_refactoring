@@ -1,22 +1,22 @@
-import CreatePassenger from "../../src/application/usecase/create_passenger";
 import GetRide from "../../src/application/usecase/get_ride";
 import RequestRide from "../../src/application/usecase/request_ride";
 import PgPromiseAdapter from "../../src/infra/database/pg_promise_adapter";
 import RepositoryFactoryDatabase from "../../src/infra/factory/repository_factory_database";
-import PassengerRepositoryDatabase from "../../src/infra/repository/passenger_repository_database";
+import AccountGatewayHttp from "../../src/infra/gateway/account_gateway_http";
+import AxiosAdapter from "../../src/infra/http/axios_adapter";
 import RideRepositoryDatabase from "../../src/infra/repository/ride_repository_database";
 
 test("Deve solicitar uma corrida", async () => {
-  const inputPassenger = {
+  const inputCreatePassenger = {
     name: "John Doe",
     email: "john.doe@test.com",
     document: "834.326.160-74"
   };
   const connection = new PgPromiseAdapter();
-  const createPassenger = new CreatePassenger(new PassengerRepositoryDatabase(connection));
-  const outputCretePassenger = await createPassenger.execute(inputPassenger);
+  const accountGateway = new AccountGatewayHttp(new AxiosAdapter())
+	const outputCreatePassenger = await accountGateway.createPassenger(inputCreatePassenger);
   const inputRequestRide = {
-    passengerId: outputCretePassenger.passengerId,
+    passengerId: outputCreatePassenger.passengerId,
     from: {
       lat: -27.584905257808835,
       long: -48.545022195325124
@@ -34,14 +34,14 @@ test("Deve solicitar uma corrida", async () => {
 });
 
 test("Deve obter uma corrida", async () => {
-  const inputPassenger = {
+  const inputCreatePassenger = {
     name: "John Doe",
     email: "john.doe@test.com",
     document: "834.326.160-74"
   };
   const connection = new PgPromiseAdapter();
-  const createPassenger = new CreatePassenger(new PassengerRepositoryDatabase(connection));
-  const outputCreatePassenger = await createPassenger.execute(inputPassenger);
+  const accountGateway = new AccountGatewayHttp(new AxiosAdapter())
+	const outputCreatePassenger = await accountGateway.createPassenger(inputCreatePassenger);
   const inputRequestRide = {
     passengerId: outputCreatePassenger.passengerId,
     from: {

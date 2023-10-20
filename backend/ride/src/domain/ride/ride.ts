@@ -5,8 +5,7 @@ import NormalFareCalculatorHandler from "../fare/chain_of_responsability/normal_
 import OvernightFareCalculatorHandler from "../fare/chain_of_responsability/overnight_fare_calculator_handler";
 import OvernightSundayFareCalculatorHandler from "../fare/chain_of_responsability/overnight_sunday_fare_calculator_handler";
 import SundayFareCalculatorHandler from "../fare/chain_of_responsability/sunday_fare_calculator_handler";
-import UUIDGenetator from "../person/uuid_generator";
-// import FareCalculatorFactory from "../fare/strategy/fare_calculator_factory";
+import UUIDGenetator from '../identity/uuid_generator'
 import Position from "./position";
 import Segment from "./segment";
 import RideStatus from "./status/ride_status";

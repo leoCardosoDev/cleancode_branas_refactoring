@@ -1,7 +1,4 @@
 import CreatePassenger from "./application/usecase/create_passenger";
-import CreateDriver from "./application/usecase/create_driver";
-import GetPassenger from "./application/usecase/get_passenger";
-import GetDriver from "./application/usecase/get_driver";
 import DriverRepositoryDatabase from "./infra/repository/driver_repository_database";
 import PassengerRepositoryDatabase from "./infra/repository/passenger_repository_database";
 import PgPromiseAdapter from "./infra/database/pg_promise_adapter";
