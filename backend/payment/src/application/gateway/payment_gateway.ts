@@ -1,5 +1,5 @@
 export default interface PaymentGateway {
-  process (input: Input): Promise<Output>
+  createTransaction (input: Input): Promise<Output>
 }
 
 export type Input = {
