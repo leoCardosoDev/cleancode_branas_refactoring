@@ -1,5 +1,5 @@
 export default interface PaymentGateway {
-  process (input: Input): Promise<Output>
+  process (input: Input): Promise<void>
 }
 
 export type Input = {
@@ -8,6 +8,3 @@ export type Input = {
   amount: number
 }
 
-export type Output = {
-  transactionId: string
-}
