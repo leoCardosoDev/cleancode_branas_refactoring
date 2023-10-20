@@ -11,5 +11,10 @@ export default class TransactionRepositoryDatabase implements TransactionReposit
       transaction.transactionId, transaction.name, transaction.email, transaction.amount
     ])
   }
+
+  async get(transactionId: string): Promise<Transaction> {
+    const [transactionData] = await this.connection.query('select * from cccat12.transaction where transaction_id = $1', [transactionId])
+    return new Transaction(transactionData.transactionId, transactionData.name, transactionData.email, parseFloat(transactionData.amount))
+  }
   
 }
