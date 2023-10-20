@@ -21,4 +21,4 @@ const usecaseFactory = new UsecaseFactory(repositoryFactory)
 const register = Registry.getInstance()
 register.provide('createPassenger', createPassenger)
 new MainController(httpServer, usecaseFactory);
-httpServer.listen(3000);
+httpServer.listen(3002);
