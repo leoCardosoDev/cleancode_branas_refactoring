@@ -10,6 +10,6 @@ export default class DriverGatewayHttp implements DriverGateway {
       document: driver.document.getValue(),
       carPlate: driver.carPlate.getValue()
     }
-    return await this.httpClient.post('http://localhost:3000/drivers', input)
+    return await this.httpClient.post('http://localhost:3002/drivers', input)
   }
 }
