@@ -16,6 +16,17 @@ test("Deve cadastrar um passageiro", async () => {
   expect(output.passengerId).toBeDefined();
 });
 
+test("Deve cadastrar um passageiro async com rabbitmq", async () => {
+  const input = {
+    name: "John Doe",
+    email: "john.doe@test.com",
+    document: "834.326.160-74",
+    password: '123456'
+  };
+  await axios.post("http://localhost:3002/passengersAsync", input);
+
+});
+
 test("Não deve cadastrar um passageiro com cpf invalido", async () => {
   const input = {
     name: "John Doe",
