@@ -8,7 +8,8 @@ test("Deve cadastrar um passageiro", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
-    document: "834.326.160-74"
+    document: "834.326.160-74",
+    password: '123456'
   };
   const response = await axios.post("http://localhost:3002/passengers", input);
   const output = response.data;
@@ -19,7 +20,8 @@ test("Não deve cadastrar um passageiro com cpf invalido", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
-    document: "834.326.160-76"
+    document: "834.326.160-76",
+    password: '123456'
   };
   const response = await axios.post("http://localhost:3002/passengers", input);
   expect(response.status).toBe(422)
@@ -31,7 +33,8 @@ test("Deve obter um passageiro", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
-    document: "834.326.160-74"
+    document: "834.326.160-74",
+    password: '123456'
   };
   const responseCreatePassender = await axios.post("http://localhost:3002/passengers", input);
   const outputCreatePassender = responseCreatePassender.data;

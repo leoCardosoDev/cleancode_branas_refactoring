@@ -38,7 +38,7 @@ test("Deve obter um passageiro com database", async () => {
   const connection = new PgPromiseAdapter();
   const create = new CreatePassenger(new PassengerRepositoryDatabase(connection), new UserRepositoryDatabase(connection));
   const getId = await create.execute(input);
-  const usecase = new GetPassenger(new PassengerRepositoryDatabase(connection));
+  const usecase = new GetPassenger(new PassengerRepositoryDatabase(connection), new UserRepositoryDatabase(connection));
   const output = await usecase.execute({passengerId: getId.passengerId});
   expect(output.name).toBe("John Doe");
   expect(output.email).toBe("john.doe@test.com");

@@ -1,6 +1,8 @@
 drop table cccat12.passenger;
 drop table cccat12.driver;
 drop table cccat12.ride;
+drop table cccat12.transaction;
+drop table cccat12.user;
 drop schema cccat12 cascade;
 create schema cccat12;
 
