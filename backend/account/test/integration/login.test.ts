@@ -1,5 +1,4 @@
 import CreatePassenger from "../../src/application/usecase/create_passenger";
-import GetPassenger from "../../src/application/usecase/get_passenger";
 import Login from "../../src/application/usecase/login";
 import PgPromiseAdapter from "../../src/infra/database/pg_promise_adapter";
 import PassengerRepositoryDatabase from "../../src/infra/repository/passenger_repository_database";
