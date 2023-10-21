@@ -5,7 +5,7 @@ test('Deve criar um novo usuario com senha plain', () => {
   const user = User.create('john.doe@gmail.com', '123456', 'plain')
   expect(user.userId).toBeDefined()
   expect(user.email.value).toBe('john.doe@gmail.com')
-  expect(user.password).toBe('123456')
+  expect(user.password.value).toBe('123456')
 })
 
 test('Deve restaurar um usuario existente', () => {
@@ -13,14 +13,14 @@ test('Deve restaurar um usuario existente', () => {
   const user = User.restore(userId, 'john.doe@gmail.com', '123456', 'plain')
   expect(user.userId).toBeDefined()
   expect(user.email.value).toBe('john.doe@gmail.com')
-  expect(user.password).toBe('123456')
+  expect(user.password.value).toBe('123456')
 })
 
 test('Deve criar um novo usuario com senha encriptada', () => {
   const user = User.create('john.doe@gmail.com', '123456', 'sha1')
   expect(user.userId).toBeDefined()
   expect(user.email.value).toBe('john.doe@gmail.com')
-  expect(user.password).toBe('7c4a8d09ca3762af61e59520943dc26494f8941b')
+  expect(user.password.value).toBe('7c4a8d09ca3762af61e59520943dc26494f8941b')
 })
 
 test('Deve validar um usuario existente com senha plain', () => {
