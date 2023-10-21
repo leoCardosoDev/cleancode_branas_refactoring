@@ -9,7 +9,7 @@ export default class UsecaseFactory {
   constructor (readonly repositoryFactory: RepositoryFactory) {}
 
   createCreatePassenger () {
-    return new CreatePassenger(this.repositoryFactory.createPassengerRepository())
+    return new CreatePassenger(this.repositoryFactory.createPassengerRepository(), this.repositoryFactory.createUserRepository())
   }
 
   createCreateDriver () {

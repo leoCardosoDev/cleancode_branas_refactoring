@@ -7,11 +7,13 @@ import ExpressAdapter from "./infra/http/express_adapter";
 import RepositoryFactoryDatabase from "./infra/factory/repository_factory_database";
 import UsecaseFactory from "./application/factory/usecase_factory";
 import Registry from "./infra/dependency_injection/register";
+import UserRepositoryDatabase from "./infra/repository/user_repository_database";
 
 const connection = new PgPromiseAdapter();
 const passengerRepository = new PassengerRepositoryDatabase(connection);
 const driverRepository = new DriverRepositoryDatabase(connection);
-const createPassenger = new CreatePassenger(passengerRepository);
+const userRepository = new UserRepositoryDatabase(connection)
+const createPassenger = new CreatePassenger(passengerRepository, userRepository);
 const httpServer = new ExpressAdapter();
 const repositoryFactory = new RepositoryFactoryDatabase(connection)
 const usecaseFactory = new UsecaseFactory(repositoryFactory)
