@@ -8,7 +8,8 @@ test("Deve cadastrar um passageiro com database", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
-    document: "834.326.160-74"
+    document: "834.326.160-74",
+    password: '123456'
   };
   const connection = new PgPromiseAdapter();
   const usecase = new CreatePassenger(new PassengerRepositoryDatabase(connection), new UserRepositoryDatabase(connection));
@@ -21,7 +22,8 @@ test("Não pode cadastrar um passageiro com email inválido", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test",
-    document: "834.326.160-74"
+    document: "834.326.160-74",
+    password: '123456'
   };
   const connection = new PgPromiseAdapter();
   const usecase = new CreatePassenger(new PassengerRepositoryDatabase(connection), new UserRepositoryDatabase(connection));
@@ -33,7 +35,8 @@ test("Deve obter um passageiro com database", async () => {
   const input = {
     name: "John Doe",
     email: "john.doe@test.com",
-    document: "834.326.160-74"
+    document: "834.326.160-74",
+    password: '123456'
   };
   const connection = new PgPromiseAdapter();
   const create = new CreatePassenger(new PassengerRepositoryDatabase(connection), new UserRepositoryDatabase(connection));
